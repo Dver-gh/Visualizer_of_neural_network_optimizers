@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="pl">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Optimizers visualizer</title>
+        <link rel="stylesheet" href="./style/style.css">
+        <script src="https://cdn.jsdelivr.net/npm/p5@1.9.0/lib/p5.min.js"></script>
+    </head>
+    <body>
+        <label for="plotSelect">Wybierz wykres:</label>
+        <select id="plotSelect">
+            <option value="rastrigin3d">Rastrigin 3D</option>
+            <option value="parabola3d">Parabola 3D</option>
+            <option value="parabola2d">Parabola 2D</option>
+            <option value="sinus2d">Sinus 2D</option>
+        </select>
+        <br><br>
+        <label for="algoSelect">Wybierz algorytm optymalizacji:</label>
+        <select id="algoSelect">
+            <option value="adam">Adam</option>
+            <option value="sgd">SGD</option>
+            <option value="momentum">SGD z momentum</option>
+            <option value="nesterov">Nesterov momentum</option>
+            <option value="adagrad">AdaGrad</option>
+            <option value="rmsprop">RMSProp</option>
+        </select>
+        <br><br>
+        <button onclick="loadPlot()">Załaduj wykres</button>
+        <script>
+            function loadPlot() {
+                const selectedPlot = document.getElementById("plotSelect").value;
+                const selectedAlgo = document.getElementById("algoSelect").value;
+                window.location.href = "./wykresy/" + selectedPlot + ".html?algo=" + selectedAlgo;
+            }
+        </script>
+    </body>
+</html>

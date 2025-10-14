@@ -1,0 +1,70 @@
+body {
+    background: #f4f4f7;
+    font-family: 'Segoe UI', 'Roboto', Arial, sans-serif;
+    font-size: 1.2rem;
+    color: #222;
+    margin: 0;
+    padding: 40px 0;
+    text-align: center;
+}
+
+label {
+    font-weight: 500;
+    margin: 0 10px 0 0;
+}
+
+select {
+    font-size: 1.1rem;
+    padding: 8px 16px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    background: #fff;
+    margin: 0 0 20px 0;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+    transition: border-color 0.2s;
+}
+
+select:focus {
+    border-color: #888;
+    outline: none;
+}
+
+button {
+    font-size: 1.2rem;
+    padding: 12px 32px;
+    border-radius: 24px;
+    border: none;
+    background: #4f8cff;
+    color: #fff;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+    margin-top: 20px;
+    transition: background 0.2s, transform 0.1s;
+}
+
+button:hover {
+    background: #357ae8;
+    transform: translateY(-2px) scale(1.03);
+}
+
+h2, h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 30px;
+}
+
+@media (max-width: 600px) {
+    body {
+        font-size: 1rem;
+        padding: 10px 0;
+    }
+    button {
+        font-size: 1rem;
+        padding: 10px 20px;
+    }
+    select {
+        font-size: 1rem;
+        padding: 6px 10px;
+    }
+}

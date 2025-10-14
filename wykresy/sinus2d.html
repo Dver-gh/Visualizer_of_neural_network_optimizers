@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <title>Sinus 2D - Optimizer</title>
+  <link rel="stylesheet" href="../style/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/p5@1.9.0/lib/p5.min.js"></script>
+  <script src="../optimizers.js"></script>
+  <script src="../visualizer2d.js"></script>
+</head>
+<body>
+  <h2 id="header">Wizualizacja funkcji optymalizacji na wykresie sinusa</h2>
+  <button onclick="window.location.href='../index.html'">⬅ Powrót</button>
+  <script>
+    run2DVisualizer({
+      func: (x, y) => Math.sin(x),
+      grad: (x, y) => createVector(Math.cos(x), 0),
+      xRange: [-2 * Math.PI, 2 * Math.PI],
+      yRange: [-1.2, 1.2],
+      start: [2, 0],
+      levels: [-1, 0, 1],
+      alpha: 0.1,
+      canvasSize: [700, 400],
+      is1D: true,
+      graph: "sinusa"
+    });
+  </script>
+</body>
+</html>

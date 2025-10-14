@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <title>Parabola 2D - Optimizer</title>
+  <link rel="stylesheet" href="../style/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/p5@1.9.0/lib/p5.min.js"></script>
+  <script src="../optimizers.js"></script>
+  <script src="../visualizer2d.js"></script>
+
+</head>
+<body>
+  <h2 id="header">Wizualizacja funkcji optymalizacji na wykresie paraboli</h2>
+  <button onclick="window.location.href='../index.html'">⬅ Powrót</button>
+  <script>
+    run2DVisualizer({
+      func: (x, y) => x * x,
+      grad: (x, y) => createVector(2 * x, 0),
+      xRange: [-4, 4],
+      yRange: [0, 16],
+      start: [3, 0],
+      levels: [1, 4, 9, 16],
+      alpha: 0.1,
+      canvasSize: [700, 400],
+      is1D: true,
+      graph: "paraboli"
+    });
+  </script>
+</body>
+</html>
