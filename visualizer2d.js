@@ -7,7 +7,14 @@ function run2DVisualizer(config) {
   let rmspropBeta = 0.9;
 
   window.setup = function() {
-    createCanvas(canvasSize[0], canvasSize[1]);
+    const cnv = createCanvas(canvasSize[0], canvasSize[1]);
+    const canvasElt = cnv.elt;
+    const container = document.getElementById('visualizerContainer');
+    if (container && canvasElt && canvasElt.parentElement !== container) {
+      container.appendChild(canvasElt);
+      canvasElt.style.display = 'block';
+    }
+
     pos = createVector(start[0], start[1]);
     m = createVector(0, 0);
     v = createVector(0, 0);
@@ -23,6 +30,11 @@ function run2DVisualizer(config) {
 
     state = { pos, m, v, t };
     frameRate(60);
+
+    window.state = state;
+    window.path = path;
+    window.grad = grad;
+    window.algo = algo;
   };
 
   window.draw = function() {
@@ -99,6 +111,69 @@ function run2DVisualizer(config) {
 
   function getAlgo() {
     const params = new URLSearchParams(window.location.search);
-    return params.get('algo');
+    return params.get('algo') || 'adam';
   }
+}
+
+function initVisualizer2D(config) {
+  if (!config) return;
+  window.__viz_config = config;
+
+  function clearCanvas() {
+    const old = document.querySelector('#visualizerContainer canvas');
+    if (old && old.parentElement) old.parentElement.removeChild(old);
+  }
+
+  function startOnce() {
+    if (!window.__viz_started) {
+      run2DVisualizer(config);
+      window.__viz_started = true;
+    }
+  }
+
+  function moveCanvasToContainer() {
+    const container = document.getElementById('visualizerContainer');
+    const canvas = document.querySelector('canvas');
+    if (container && canvas && canvas.parentElement !== container) {
+      container.appendChild(canvas);
+      canvas.style.display = 'block';
+    }
+  }
+
+  window.resetVisualizer = function() {
+    if (window.state && window.path) {
+      const s = window.__viz_config.start;
+      window.state.pos.set(s[0], s[1]);
+      window.state.m.set(0, 0);
+      window.state.v.set(0, 0);
+      window.state.t = 1;
+      window.path.length = 0;
+      window.path.push(window.state.pos.copy());
+    } else {
+      clearCanvas();
+      window.__viz_started = false;
+      startOnce();
+    }
+  };
+
+  startOnce();
+
+  const moveInterval = setInterval(() => {
+    moveCanvasToContainer();
+    const canvas = document.querySelector('canvas');
+    if (canvas) {
+      clearInterval(moveInterval);
+    }
+  }, 50);
+}
+
+if (typeof window !== 'undefined') {
+  window.moveCanvasToContainer = function() {
+    const container = document.getElementById('visualizerContainer');
+    const canvas = document.querySelector('canvas');
+    if (container && canvas && canvas.parentElement !== container) {
+      container.appendChild(canvas);
+      canvas.style.display = 'block';
+    }
+  };
 }

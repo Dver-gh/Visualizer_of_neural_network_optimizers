@@ -7,14 +7,21 @@ function run3DVisualizer(config) {
   let rmspropBeta = 0.9;
 
   window.setup = function() {
-    createCanvas(canvasSize[0], canvasSize[1], WEBGL);
+    const cnv = createCanvas(canvasSize[0], canvasSize[1], WEBGL);
+    const canvasElt = cnv.elt;
+    const container = document.getElementById('visualizerContainer');
+    if (container && canvasElt && canvasElt.parentElement !== container) {
+      container.appendChild(canvasElt);
+      canvasElt.style.display = 'block';
+    }
+
     pos = createVector(start[0], start[1]);
     m = createVector(0, 0);
     v = createVector(0, 0);
     t = 1;
     path = [];
     path.push(pos.copy());
-    algo = getAlgo();
+    algo = getAlgo() || 'adam';
 
     if (document.getElementById("header")) {
       document.getElementById("header").innerText =
@@ -22,7 +29,12 @@ function run3DVisualizer(config) {
     }
 
     state = { pos, m, v, t };
-    frameRate(120);
+    frameRate(60);
+
+    window.state = state;
+    window.path = path;
+    window.grad = grad;
+    window.algo = algo;
   };
 
   window.draw = function() {
@@ -30,12 +42,12 @@ function run3DVisualizer(config) {
     orbitControl();
     rotateX(PI / 3.5);
 
-    if(graph != "Himmelblau 3D") {
-        scale(60);
+    if (graph !== "Himmelblau 3D") {
+      scale(60);
+    } else {
+      scale(20);
     }
-    else {
-        scale(20);
-    }
+
     let minX = xRange[0], maxX = xRange[1];
     let minY = yRange[0], maxY = yRange[1];
     translate(- (maxX + minX)/2, - (maxY + minY)/2, 0);
@@ -92,6 +104,67 @@ function run3DVisualizer(config) {
 
   function getAlgo() {
     const params = new URLSearchParams(window.location.search);
-    return params.get('algo');
+    return params.get('algo') || 'adam';
   }
+}
+
+function initVisualizer3D(config) {
+  if (!config) return;
+  window.__viz3d_config = config;
+
+  function clearCanvas() {
+    const old = document.querySelector('#visualizerContainer canvas');
+    if (old && old.parentElement) old.parentElement.removeChild(old);
+  }
+
+  function startOnce() {
+    if (!window.__viz3d_started) {
+      run3DVisualizer(config);
+      window.__viz3d_started = true;
+    }
+  }
+
+  function moveCanvasToContainer() {
+    const container = document.getElementById('visualizerContainer');
+    const canvas = document.querySelector('canvas');
+    if (container && canvas && canvas.parentElement !== container) {
+      container.appendChild(canvas);
+      canvas.style.display = 'block';
+    }
+  }
+
+  window.resetVisualizer3D = function() {
+    if (window.state && window.path) {
+      const s = window.__viz3d_config.start;
+      window.state.pos.set(s[0], s[1]);
+      if (window.state.m && window.state.m.set) window.state.m.set(0, 0);
+      if (window.state.v && window.state.v.set) window.state.v.set(0, 0);
+      window.state.t = 1;
+      window.path.length = 0;
+      window.path.push(window.state.pos.copy());
+    } else {
+      clearCanvas();
+      window.__viz3d_started = false;
+      startOnce();
+    }
+  };
+
+  startOnce();
+
+  const moveInterval = setInterval(() => {
+    moveCanvasToContainer();
+    const canvas = document.querySelector('canvas');
+    if (canvas) clearInterval(moveInterval);
+  }, 50);
+}
+
+if (typeof window !== 'undefined') {
+  window.moveCanvasToContainer3D = function() {
+    const container = document.getElementById('visualizerContainer');
+    const canvas = document.querySelector('canvas');
+    if (container && canvas && canvas.parentElement !== container) {
+      container.appendChild(canvas);
+      canvas.style.display = 'block';
+    }
+  };
 }

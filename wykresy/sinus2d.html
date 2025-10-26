@@ -9,10 +9,43 @@
   <script src="../visualizer2d.js"></script>
 </head>
 <body>
-  <h2 id="header">Wizualizacja funkcji optymalizacji na wykresie sinusa</h2>
-  <button onclick="window.location.href='../index.html'">⬅ Powrót</button>
+  <div class="topbar">
+    <div class="left">
+      <button class="small-btn" id="backBtn">Powrót</button>
+      <button class="small-btn" id="resetBtn">Reset</button>
+    </div>
+    <div class="center">
+      <h2 id="header">Wizualizacja funkcji optymalizacji na wykresie sinusa</h2>
+    </div>
+    <div class="right"></div>
+  </div>
+
+  <div class="visualizer-wrap">
+    <div id="visualizerContainer"></div>
+
+    <aside id="legend" aria-label="Legenda wykresu">
+      <h3>Legenda</h3>
+      <ul>
+        <li><span class="legend-symbol dot red"></span> Czerwona kropka - obecna pozycja optymalizatora</li>
+        <li><span class="legend-symbol line blue"></span> Niebieska linia - trajektoria optymalizatora</li>
+      </ul>
+    </aside>
+
+    <aside id="parameters" aria-label="Parametry wykresu">
+      <h3>Parametry</h3>
+      <ul>
+        <li><span class="parameters-word">Parametr 1:</span><input></li>
+        <li><span class="parameters-word">Parametr 2:</span><input></li>
+      </ul>
+    </aside>
+  </div>
+
   <script>
-    run2DVisualizer({
+    document.getElementById('backBtn').addEventListener('click', () => {
+      window.location.href = '../index.html';
+    });
+
+    const config = {
       func: (x, y) => Math.sin(x),
       grad: (x, y) => createVector(Math.cos(x), 0),
       xRange: [-2 * Math.PI, 2 * Math.PI],
@@ -20,9 +53,16 @@
       start: [2, 0],
       levels: [-1, 0, 1],
       alpha: 0.1,
-      canvasSize: [700, 400],
+      canvasSize: [900, 520],
       is1D: true,
       graph: "sinusa"
+    };
+
+    document.addEventListener('DOMContentLoaded', () => {
+      window.initVisualizer2D(config);
+      document.getElementById('resetBtn').addEventListener('click', () => {
+        window.resetVisualizer();
+      });
     });
   </script>
 </body>
