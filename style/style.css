@@ -221,3 +221,7 @@ h2, h1 {
 
 .legend-symbol.red { background: #ff4d4d; }
 .legend-symbol.blue { background: #2b6cff; }
+
+#frontpageH1 {
+    padding-bottom: 30px;
+}

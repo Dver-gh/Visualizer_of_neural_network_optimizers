@@ -21,7 +21,6 @@
   </div>
   <div class="visualizer-wrap">
     <div id="visualizerContainer"></div>
-
     <aside id="legend" aria-label="Legenda wykresu">
       <h3>Legenda</h3>
       <ul>
@@ -29,20 +28,10 @@
         <li><span class="legend-symbol line blue"></span> Niebieska linia - trajektoria optymalizatora</li>
       </ul>
     </aside>
-    <aside id="parameters" aria-label="Parametry wykresu">
-      <h3>Parametry</h3>
-      <ul>
-        <li><span class="parameters-word">Parametr 1:</span><input></li>
-        <li><span class="parameters-word">Parametr 2:</span><input></li></li>
-      </ul>
-    </aside>
+    <aside id="parameters" aria-label="Parametry wykresu"></aside>
   </div>
-
+  <script src="../parameters.js" defer></script>
   <script>
-    document.getElementById('backBtn').addEventListener('click', () => {
-      window.location.href = '../index.html';
-    });
-
     const config = {
       func: (x, y) => x * x,
       grad: (x, y) => createVector(2 * x, 0),
@@ -55,13 +44,6 @@
       is1D: true,
       graph: "paraboli"
     };
-
-    document.addEventListener('DOMContentLoaded', () => {
-      window.initVisualizer2D(config);
-      document.getElementById('resetBtn').addEventListener('click', () => {
-        window.resetVisualizer();
-      });
-    });
   </script>
 </body>
 </html>

@@ -7,6 +7,7 @@
         <script src="https://cdn.jsdelivr.net/npm/p5@1.9.0/lib/p5.min.js"></script>
     </head>
     <body>
+        <h1 id="frontpageH1">Wizualizacja algorytmów optymalizacji sieci neuronowych</h1>
         <label for="plotSelect">Wybierz wykres:</label>
         <select id="plotSelect">
             <option value="rastrigin3d">Rastrigin 3D</option>
@@ -17,12 +18,12 @@
         <br><br>
         <label for="algoSelect">Wybierz algorytm optymalizacji:</label>
         <select id="algoSelect">
-            <option value="adam">Adam</option>
-            <option value="sgd">SGD</option>
-            <option value="momentum">SGD z momentum</option>
-            <option value="nesterov">Nesterov momentum</option>
-            <option value="adagrad">AdaGrad</option>
-            <option value="rmsprop">RMSProp</option>
+            <option value="SGD">SGD</option>
+            <option value="SGDMomentum">SGD z momentum</option>
+            <option value="NesterovMomentum">Nesterov momentum</option>
+            <option value="Adagrad">AdaGrad</option>
+            <option value="RMSprop">RMSProp</option>
+            <option value="Adam">Adam</option>
         </select>
         <br><br>
         <button onclick="loadPlot()">Załaduj wykres</button>
