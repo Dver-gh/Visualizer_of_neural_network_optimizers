@@ -43,13 +43,6 @@
     return out;
   }
 
-  function mergeParams(base, override) {
-    const res = Object.assign({}, base || {});
-    if (!override) return res;
-    for (const k of Object.keys(override)) res[k] = override[k];
-    return res;
-  }
-
   function loadOptimizerParameters() {
     if (window.__optimizer_params_all) return Promise.resolve(window.__optimizer_params_all);
     return fetch('../optimizersParameters.json')
