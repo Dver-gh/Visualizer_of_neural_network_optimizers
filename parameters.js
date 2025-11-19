@@ -73,8 +73,9 @@ async function generateParametersUI(selectedAlgo) {
 
         button.addEventListener('click', () => {
             const tryCall = (attemptsLeft) => {
-                if (typeof window.__viz_recalc === 'function') {
-                    window.__viz_recalc();
+                const vizReady = !!(window.state && window.state.pos) || !!window.__viz_started || !!window.__viz3d_started;
+                if (vizReady && typeof window.__viz_recalc === 'function') {
+                    try { window.__viz_recalc(); } catch (e) { console.warn('__viz_recalc call failed', e); }
                     return;
                 }
                 if (attemptsLeft <= 0) {
@@ -93,9 +94,9 @@ async function generateParametersUI(selectedAlgo) {
                     }
                     return;
                 }
-                setTimeout(() => tryCall(attemptsLeft - 1), 150);
+                setTimeout(() => tryCall(attemptsLeft - 1), 200);
             };
-            tryCall(10);
+            tryCall(20);
         });
 
     } catch (error) {
@@ -112,6 +113,11 @@ document.addEventListener('DOMContentLoaded', () => {
     if (window.initVisualizer2D && typeof config !== 'undefined') {
         console.log("Uruchamiam funkcję initVisualizer2D")
         window.initVisualizer2D(config);
+    }
+
+    if (window.initVisualizer3D && typeof config !== 'undefined') {
+        console.log("Uruchamiam funkcję initVisualizer3D")
+        window.initVisualizer3D(config);
     }
 
     const resetBtn = document.getElementById('resetBtn');

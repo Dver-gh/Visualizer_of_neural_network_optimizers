@@ -22,7 +22,6 @@
 
   <div class="visualizer-wrap">
     <div id="visualizerContainer"></div>
-
     <aside id="legend" aria-label="Legenda wykresu">
       <h3>Legenda</h3>
       <ul>
@@ -30,17 +29,10 @@
         <li><span class="legend-symbol line blue"></span> Niebieska linia - trajektoria optymalizatora</li>
       </ul>
     </aside>
-
     <aside id="parameters" aria-label="Parametry wykresu"></aside>
   </div>
-
   <script src="../parameters.js" defer></script>
-
   <script>
-    document.getElementById('backBtn').addEventListener('click', () => {
-      window.location.href = '../index.html';
-    });
-
     const config = {
       func: (x, y) => 20 + (x*x - 10*Math.cos(2*Math.PI*x)) + (y*y - 10*Math.cos(2*Math.PI*y)),
       grad: (x, y) => createVector(
@@ -55,18 +47,6 @@
       canvasSize: [900, 700],
       graph: "Rastrigin 3D"
     };
-
-    document.addEventListener('DOMContentLoaded', () => {
-      if (typeof window.initVisualizer3D === 'function') {
-        window.initVisualizer3D(config);
-      } else {
-        run3DVisualizer(config);
-      }
-      document.getElementById('resetBtn').addEventListener('click', () => {
-        if (typeof window.resetVisualizer3D === 'function') window.resetVisualizer3D();
-        else window.location.reload();
-      });
-    });
   </script>
 </body>
 </html>

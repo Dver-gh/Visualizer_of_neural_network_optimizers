@@ -161,6 +161,7 @@
     };
 
     window.draw = function () {
+      if (!stateObj || !stateObj.pos) return;
       background(255);
 
       if (local.is1D) {
